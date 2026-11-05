@@ -1,0 +1,423 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-family: var(--font-body);
+    background-color: #0B0B14;
+    color: #141418;
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+  }
+}
+
+/* Studio photographic lighting with seamless orange -> amber -> warm cream -> white transition */
+.hero-studio-backdrop {
+  overflow: clip;
+  background-color: #FFFFFF;
+  background-image:
+    /* Deep burnt-orange upper-left studio shadow falloff */
+    radial-gradient(ellipse 52% 66% at 8% 18%, #7F2103 0%, #A12E06 38%, rgba(199, 73, 10, 0.45) 64%, transparent 85%),
+    /* Vibrant golden-yellow lower-left key light behind neck & shoulder */
+    radial-gradient(circle at 26% 76%, #FFD03B 0%, #FBA919 28%, rgba(245, 158, 29, 0.45) 56%, transparent 80%),
+    /* Warm amber mid-field behind head fading smoothly rightward */
+    radial-gradient(ellipse 46% 62% at 38% 40%, rgba(232, 111, 18, 0.75) 0%, rgba(245, 162, 56, 0.35) 52%, transparent 82%),
+    /* Continuous horizontal multi-stop blend: deep orange -> lighter orange -> amber -> warm cream -> pure white */
+    linear-gradient(
+      90deg,
+      #9E2C05 0%,
+      #C84A0A 18%,
+      #E87715 32%,
+      #F4A236 43%,
+      #F9C77B 52%,
+      #FDE5BA 60%,
+      #FFF6E5 67%,
+      #FFFFFF 75%,
+      #FFFFFF 100%
+    );
+}
+
+.hero-right-seamless-blend {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 246, 229, 0) 0%,
+    rgba(253, 232, 196, 0.38) 16%,
+    rgba(255, 245, 226, 0.72) 32%,
+    rgba(255, 251, 244, 0.92) 48%,
+    #FFFFFF 66%,
+    #FFFFFF 100%
+  );
+}
+
+/* Achievements dark studio section */
+.achievements-studio-bg {
+  background-color: #0B0B14;
+  background-image:
+    radial-gradient(ellipse 55% 50% at 25% 35%, rgba(109, 40, 217, 0.26) 0%, rgba(76, 29, 149, 0.08) 55%, transparent 78%),
+    radial-gradient(ellipse 52% 48% at 75% 65%, rgba(37, 99, 235, 0.22) 0%, rgba(29, 78, 216, 0.07) 55%, transparent 80%);
+}
+
+.glass-card-dark {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.065) 0%, rgba(255, 255, 255, 0.02) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.glass-card-dark-active {
+  background: linear-gradient(160deg, rgba(139, 92, 246, 0.16) 0%, rgba(37, 99, 235, 0.08) 100%);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(167, 139, 250, 0.38);
+  box-shadow: 0 20px 48px rgba(10, 8, 28, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+@keyframes climbDotPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(167, 139, 250, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(167, 139, 250, 0);
+  }
+}
+
+.climb-dot-pulse {
+  animation: climbDotPulse 2.2s infinite;
+}
+
+/* Scoped Section 2 (About Me & My Journey) Light Cream & Warm Orange Reference Styles */
+.font-serif-editorial {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.about-light-studio-bg {
+  background-color: #FDF3E6;
+  background-image:
+    /* Soft warm orange glow in upper-left corner */
+    radial-gradient(circle at 4% 8%, rgba(254, 155, 61, 0.55) 0%, rgba(254, 186, 124, 0.28) 26%, transparent 52%),
+    /* Warm golden illumination behind portrait on the right */
+    radial-gradient(ellipse 42% 48% at 74% 58%, rgba(253, 182, 98, 0.45) 0%, rgba(254, 215, 162, 0.22) 48%, transparent 75%),
+    /* Soft ivory highlight in the lower-left behind the 3 highlight cards */
+    radial-gradient(ellipse 45% 38% at 20% 88%, #FFFDFB 0%, rgba(255, 251, 246, 0.85) 50%, transparent 80%),
+    /* Overall base gradient from warm peach-cream to soft ivory */
+    linear-gradient(
+      125deg,
+      #FEE0BE 0%,
+      #FDEAD6 28%,
+      #FFF6EC 54%,
+      #FEF0DE 78%,
+      #FDE3C2 100%
+    );
+}
+
+.about-code-accent {
+  background: linear-gradient(180deg, #E56712 0%, #D15206 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.about-highlight-card {
+  background: linear-gradient(180deg, rgba(255, 249, 241, 0.92) 0%, rgba(253, 239, 222, 0.88) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 12px 26px -6px rgba(198, 112, 36, 0.13),
+    0 4px 10px -2px rgba(198, 112, 36, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.about-highlight-icon-circle {
+  background: radial-gradient(circle at 50% 35%, #FFFDF9 0%, #FDE8CF 100%);
+  box-shadow:
+    0 4px 12px rgba(224, 102, 18, 0.14),
+    inset 0 1px 2px rgba(255, 255, 255, 0.95);
+}
+
+/* Scoped Section 3 (Skills & Tech Stack) Styles */
+.skills-studio-bg {
+  background-color: #FDF3E6;
+  background-image:
+    /* Warm orange illumination on left curve */
+    radial-gradient(ellipse 46% 58% at 4% 38%, rgba(254, 152, 52, 0.72) 0%, rgba(254, 184, 112, 0.34) 44%, transparent 74%),
+    /* Warm golden glow behind the laptop & pedestal centerpiece */
+    radial-gradient(ellipse 42% 46% at 68% 54%, rgba(254, 162, 58, 0.48) 0%, rgba(254, 198, 126, 0.24) 52%, transparent 78%),
+    /* Soft cream-white luminosity in the upper-right sky zone */
+    radial-gradient(ellipse 48% 42% at 88% 14%, #FFFFFF 0%, rgba(255, 251, 245, 0.85) 48%, transparent 78%),
+    /* Base smooth cream-to-apricot studio canvas */
+    linear-gradient(
+      130deg,
+      #FDD6A7 0%,
+      #FDE8CE 28%,
+      #FFF6EC 56%,
+      #FDF0DF 80%,
+      #FCD8AC 100%
+    );
+}
+
+.skills-tech-accent {
+  background: linear-gradient(180deg, #E56812 0%, #CF5005 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.skills-learning-box {
+  background: linear-gradient(135deg, rgba(255, 247, 237, 0.86) 0%, rgba(253, 231, 206, 0.78) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.88);
+  box-shadow:
+    0 16px 34px -8px rgba(196, 102, 24, 0.14),
+    0 4px 12px -2px rgba(196, 102, 24, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.skills-floating-tile {
+  background: linear-gradient(145deg, rgba(255, 252, 247, 0.92) 0%, rgba(253, 234, 210, 0.82) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid rgba(255, 255, 255, 0.92);
+  box-shadow:
+    0 18px 36px -8px rgba(194, 98, 18, 0.22),
+    0 4px 12px rgba(235, 132, 38, 0.14),
+    inset 0 1px 2px rgba(255, 255, 255, 0.98),
+    inset 0 -2px 6px rgba(244, 158, 66, 0.22);
+}
+
+.skills-floating-tile-active {
+  background: linear-gradient(145deg, #FFFFFF 0%, #FDEBD2 100%);
+  border-color: #F59E3F;
+  box-shadow:
+    0 22px 44px -6px rgba(218, 102, 14, 0.34),
+    0 0 24px rgba(251, 169, 58, 0.45),
+    inset 0 1px 2px #FFFFFF;
+}
+
+.skills-core-pill {
+  background: linear-gradient(180deg, rgba(255, 250, 244, 0.92) 0%, rgba(253, 237, 218, 0.86) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 10px 24px -6px rgba(192, 102, 24, 0.13),
+    0 2px 6px rgba(192, 102, 24, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.skills-core-pill:hover,
+.skills-core-pill-active {
+  background: linear-gradient(180deg, #FFFDFB 0%, #FDE6C8 100%);
+  border-color: rgba(242, 142, 43, 0.65);
+  box-shadow:
+    0 14px 28px -6px rgba(208, 104, 18, 0.22),
+    0 4px 10px rgba(208, 104, 18, 0.1),
+    inset 0 1px 0 #FFFFFF;
+}
+
+@keyframes skillsGentleFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.skills-float-slow {
+  animation: skillsGentleFloat 5.5s ease-in-out infinite;
+}
+
+.skills-float-medium {
+  animation: skillsGentleFloat 4.6s ease-in-out 0.8s infinite;
+}
+
+.skills-float-delayed {
+  animation: skillsGentleFloat 5.2s ease-in-out 1.6s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .climb-dot-pulse,
+  .skills-float-slow,
+  .skills-float-medium,
+  .skills-float-delayed,
+  .projects-float-center,
+  .projects-float-side {
+    animation: none !important;
+  }
+}
+
+/* ============================================================================
+   Scoped Section 4 (Projects — Turning Ideas into Impact) Styles
+============================================================================ */
+.projects-studio-bg {
+  background-color: #E8741E;
+  background-image:
+    /* Deep rich burnt-orange studio shadow on the upper & middle left */
+    radial-gradient(ellipse 52% 68% at 8% 36%, #8B2402 0%, #B73905 42%, rgba(212, 82, 13, 0.55) 72%, transparent 92%),
+    /* Soft luminous warm cream-white glow in lower-left/center transition */
+    radial-gradient(ellipse 46% 38% at 35% 86%, #FFFDF9 0%, #FFF2E1 46%, rgba(254, 218, 176, 0.45) 75%, transparent 95%),
+    /* Bright warm ivory sky highlight at upper-right corner */
+    radial-gradient(ellipse 44% 38% at 94% 10%, #FFFDF9 0%, #FDECD6 48%, transparent 82%),
+    /* Deep burnt-umber ambient shadow directly under the central 3D card */
+    radial-gradient(ellipse 26% 16% at 69% 77%, rgba(168, 52, 3, 0.78) 0%, rgba(210, 82, 12, 0.35) 58%, transparent 88%),
+    /* Base editorial studio canvas gradient */
+    linear-gradient(
+      112deg,
+      #962903 0%,
+      #C44308 24%,
+      #E86A17 44%,
+      #F79B46 64%,
+      #FDD6A9 84%,
+      #FFF4E6 100%
+    );
+}
+
+.projects-impact-accent {
+  background: linear-gradient(180deg, #FFB866 0%, #F58225 55%, #DF5B0C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.projects-cta-pill {
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFF4E6 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.96);
+  box-shadow:
+    0 16px 34px -6px rgba(122, 34, 2, 0.36),
+    0 4px 12px rgba(140, 42, 4, 0.18),
+    inset 0 1px 2px #FFFFFF;
+}
+
+.projects-cta-pill:hover {
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFEBD2 100%);
+  box-shadow:
+    0 20px 40px -6px rgba(122, 34, 2, 0.46),
+    0 0 22px rgba(255, 232, 202, 0.55),
+    inset 0 1px 2px #FFFFFF;
+}
+
+/* 3D Perspective Project Showcase Cards */
+.projects-card-left {
+  transform: perspective(1350px) rotateY(16deg) rotateX(4deg) rotateZ(-5.5deg);
+  transform-style: preserve-3d;
+  background: linear-gradient(180deg, rgba(246, 212, 172, 0.92) 0%, rgba(252, 228, 198, 0.95) 65%, rgba(247, 210, 168, 0.94) 100%);
+  border: 1.5px solid rgba(255, 245, 230, 0.85);
+  box-shadow:
+    -14px 24px 44px -10px rgba(168, 62, 8, 0.32),
+    0 8px 20px rgba(186, 78, 14, 0.18),
+    inset 0 1px 2px rgba(255, 255, 255, 0.92);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.projects-card-left:hover {
+  transform: perspective(1350px) rotateY(13deg) rotateX(3deg) rotateZ(-4.2deg) translateY(-5px) scale(1.015);
+  box-shadow:
+    -16px 30px 52px -8px rgba(158, 54, 4, 0.42),
+    0 0 24px rgba(255, 224, 182, 0.55),
+    inset 0 1px 2px #FFFFFF;
+}
+
+.projects-card-center {
+  transform: perspective(1400px) rotateY(-13.5deg) rotateX(4.5deg) rotateZ(-4.2deg);
+  transform-style: preserve-3d;
+  background: linear-gradient(180deg, #120702 0%, #1E0B03 54%, #F5D5B2 78%, #FBE5CC 100%);
+  border: 1.5px solid rgba(255, 242, 222, 0.92);
+  box-shadow:
+    0 34px 68px -12px rgba(128, 36, 2, 0.62),
+    0 14px 32px -6px rgba(164, 54, 4, 0.42),
+    2px -2px 18px rgba(255, 235, 200, 0.45),
+    inset 0 1px 2px rgba(255, 255, 255, 0.95);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.projects-card-center:hover {
+  transform: perspective(1400px) rotateY(-11deg) rotateX(3.5deg) rotateZ(-3.4deg) translateY(-6px) scale(1.015);
+  box-shadow:
+    0 42px 78px -10px rgba(120, 32, 2, 0.68),
+    0 16px 36px -4px rgba(180, 62, 6, 0.48),
+    0 0 28px rgba(255, 218, 165, 0.65),
+    inset 0 1px 2px #FFFFFF;
+}
+
+.projects-card-right {
+  transform: perspective(1350px) rotateY(-17deg) rotateX(4deg) rotateZ(-3.8deg);
+  transform-style: preserve-3d;
+  background: linear-gradient(180deg, rgba(244, 196, 148, 0.92) 0%, rgba(250, 218, 182, 0.95) 68%, rgba(244, 195, 146, 0.94) 100%);
+  border: 1.5px solid rgba(255, 246, 232, 0.9);
+  box-shadow:
+    18px 26px 48px -10px rgba(162, 56, 4, 0.38),
+    0 8px 22px rgba(182, 70, 10, 0.22),
+    2px -2px 16px rgba(255, 242, 218, 0.55),
+    inset 0 1px 2px rgba(255, 255, 255, 0.95);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.projects-card-right:hover {
+  transform: perspective(1350px) rotateY(-14deg) rotateX(3deg) rotateZ(-2.8deg) translateY(-5px) scale(1.015);
+  box-shadow:
+    20px 32px 56px -8px rgba(154, 50, 4, 0.46),
+    0 0 26px rgba(255, 232, 196, 0.62),
+    inset 0 1px 2px #FFFFFF;
+}
+
+.projects-category-badge {
+  background: linear-gradient(135deg, rgba(255, 246, 234, 0.92) 0%, rgba(245, 214, 180, 0.86) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 252, 246, 0.92);
+  box-shadow:
+    0 8px 20px -4px rgba(82, 28, 4, 0.28),
+    inset 0 1px 1px rgba(255, 255, 255, 0.95);
+}
+
+.projects-nav-prev {
+  background: linear-gradient(145deg, rgba(255, 251, 245, 0.94) 0%, rgba(251, 232, 208, 0.88) 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 10px 24px -4px rgba(176, 78, 14, 0.22),
+    inset 0 1px 2px #FFFFFF;
+}
+
+.projects-nav-prev:hover {
+  background: linear-gradient(145deg, #FFFFFF 0%, #FDE4C4 100%);
+  box-shadow:
+    0 14px 28px -4px rgba(176, 78, 14, 0.32),
+    inset 0 1px 2px #FFFFFF;
+}
+
+.projects-nav-next {
+  background: linear-gradient(145deg, #F4741B 0%, #DC5205 100%);
+  border: 1.5px solid rgba(255, 218, 180, 0.68);
+  box-shadow:
+    0 12px 26px -4px rgba(196, 68, 4, 0.48),
+    inset 0 1px 2px rgba(255, 226, 192, 0.65);
+}
+
+.projects-nav-next:hover {
+  background: linear-gradient(145deg, #FF8126 0%, #E55A08 100%);
+  box-shadow:
+    0 16px 32px -4px rgba(196, 68, 4, 0.62),
+    0 0 18px rgba(244, 116, 27, 0.45),
+    inset 0 1px 2px rgba(255, 236, 212, 0.8);
+}
+
