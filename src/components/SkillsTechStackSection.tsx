@@ -1,3 +1,9 @@
+/**
+ * SkillsTechStackSection.tsx — Section 3: Skills & Tech Stack ("03 — MY CAPABILITIES")
+ * Renders the 3D laptop centerpiece, orbital golden rings, seven interactive floating
+ * technology waypoints (AWS, Data Analytics, Python, OpenAI, React, Code, Database),
+ * and seven synchronized Core Skill pills with full mouse, touch, and keyboard support.
+ */
 import React, { useState } from 'react';
 
 type OrbitTechId =
@@ -189,15 +195,39 @@ const CodeBracketsLogo: React.FC<{ className?: string; color?: string }> = ({
   </svg>
 );
 
+/**
+ * Renders Section 3 (Skills & Tech Stack) with synchronized orbital waypoint and skill-pill highlighting.
+ */
 export const SkillsTechStackSection: React.FC = () => {
   const [hoveredOrbitId, setHoveredOrbitId] = useState<OrbitTechId | null>(null);
+  const [selectedOrbitId, setSelectedOrbitId] = useState<OrbitTechId | null>(null);
   const [hoveredSkillId, setHoveredSkillId] = useState<string | null>(null);
 
-  const isOrbitHighlighted = (orbitId: OrbitTechId) => {
-    if (hoveredOrbitId === orbitId) return true;
-    if (!hoveredSkillId) return false;
-    const matched = CORE_SKILLS.find((s) => s.id === hoveredSkillId);
-    return matched?.linkedOrbitId === orbitId;
+  const activeOrbitId: OrbitTechId | null =
+    hoveredOrbitId ??
+    selectedOrbitId ??
+    (hoveredSkillId ? CORE_SKILLS.find((s) => s.id === hoveredSkillId)?.linkedOrbitId ?? null : null);
+
+  /**
+   * Determines whether a floating orbital waypoint should display its active highlighted state.
+   */
+  const isOrbitHighlighted = (orbitId: OrbitTechId) => activeOrbitId === orbitId;
+
+  /**
+   * Toggles the locked selection of a floating orbital technology waypoint via click, tap, or keyboard.
+   */
+  const toggleOrbitSelection = (orbitId: OrbitTechId) => {
+    setSelectedOrbitId((prev) => (prev === orbitId ? null : orbitId));
+  };
+
+  /**
+   * Handles keyboard activation (Enter or Space) on floating orbital technology waypoints.
+   */
+  const handleOrbitKeyDown = (e: React.KeyboardEvent, orbitId: OrbitTechId) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleOrbitSelection(orbitId);
+    }
   };
 
   return (
@@ -429,8 +459,9 @@ export const SkillsTechStackSection: React.FC = () => {
 
               {/* Central 3D Laptop with Warm Sunset Screen & Glowing Circular Platform */}
               <img
-                src="/skills-laptop-centerpiece.png"
+                src="skills-laptop-centerpiece.png"
                 alt="Interactive Technology Showcase Laptop"
+                loading="lazy"
                 referrerPolicy="no-referrer"
                 className="relative z-20 w-[94%] h-auto object-contain translate-y-[6%] pointer-events-none"
               />
@@ -442,9 +473,17 @@ export const SkillsTechStackSection: React.FC = () => {
 
               {/* 1. AWS Tile (Bottom-Left Orbit) */}
               <div
+                role="button"
+                tabIndex={0}
+                aria-label="AWS Cloud and Infrastructure — Remote Sensing waypoint"
+                aria-pressed={selectedOrbitId === 'aws'}
                 onMouseEnter={() => setHoveredOrbitId('aws')}
                 onMouseLeave={() => setHoveredOrbitId(null)}
-                className={`skills-float-delayed absolute left-[8.5%] top-[54.5%] w-[44px] h-[44px] sm:w-[60px] sm:h-[60px] lg:w-[66px] lg:h-[66px] xl:w-[74px] xl:h-[74px] rounded-[14px] sm:rounded-[18px] lg:rounded-[20px] flex items-center justify-center z-30 transition-all duration-300 cursor-pointer -rotate-[4deg] hover:rotate-0 hover:scale-108 ${
+                onFocus={() => setHoveredOrbitId('aws')}
+                onBlur={() => setHoveredOrbitId(null)}
+                onClick={() => toggleOrbitSelection('aws')}
+                onKeyDown={(e) => handleOrbitKeyDown(e, 'aws')}
+                className={`skills-float-delayed absolute left-[8.5%] top-[54.5%] w-[44px] h-[44px] sm:w-[60px] sm:h-[60px] lg:w-[66px] lg:h-[66px] xl:w-[74px] xl:h-[74px] rounded-[14px] sm:rounded-[18px] lg:rounded-[20px] flex items-center justify-center z-30 transition-all duration-300 cursor-pointer -rotate-[4deg] hover:rotate-0 hover:scale-108 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E56812] ${
                   isOrbitHighlighted('aws')
                     ? 'skills-floating-tile-active scale-108'
                     : 'skills-floating-tile'
@@ -456,9 +495,17 @@ export const SkillsTechStackSection: React.FC = () => {
 
               {/* 2. Data Analytics Tile (Mid-Left Orbit) */}
               <div
+                role="button"
+                tabIndex={0}
+                aria-label="Data Analytics waypoint"
+                aria-pressed={selectedOrbitId === 'analytics'}
                 onMouseEnter={() => setHoveredOrbitId('analytics')}
                 onMouseLeave={() => setHoveredOrbitId(null)}
-                className={`skills-float-medium absolute left-[13.2%] top-[35.5%] w-[44px] h-[44px] sm:w-[60px] sm:h-[60px] lg:w-[66px] lg:h-[66px] xl:w-[74px] xl:h-[74px] rounded-[14px] sm:rounded-[18px] lg:rounded-[20px] flex items-center justify-center z-30 transition-all duration-300 cursor-pointer -rotate-[5deg] hover:rotate-0 hover:scale-108 ${
+                onFocus={() => setHoveredOrbitId('analytics')}
+                onBlur={() => setHoveredOrbitId(null)}
+                onClick={() => toggleOrbitSelection('analytics')}
+                onKeyDown={(e) => handleOrbitKeyDown(e, 'analytics')}
+                className={`skills-float-medium absolute left-[13.2%] top-[35.5%] w-[44px] h-[44px] sm:w-[60px] sm:h-[60px] lg:w-[66px] lg:h-[66px] xl:w-[74px] xl:h-[74px] rounded-[14px] sm:rounded-[18px] lg:rounded-[20px] flex items-center justify-center z-30 transition-all duration-300 cursor-pointer -rotate-[5deg] hover:rotate-0 hover:scale-108 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E56812] ${
                   isOrbitHighlighted('analytics')
                     ? 'skills-floating-tile-active scale-108'
                     : 'skills-floating-tile'
@@ -470,9 +517,17 @@ export const SkillsTechStackSection: React.FC = () => {
 
               {/* 3. Python Tile (Upper-Left Orbit) */}
               <div
+                role="button"
+                tabIndex={0}
+                aria-label="Python waypoint"
+                aria-pressed={selectedOrbitId === 'python'}
                 onMouseEnter={() => setHoveredOrbitId('python')}
                 onMouseLeave={() => setHoveredOrbitId(null)}
-                className={`skills-float-slow absolute left-[23.2%] top-[15.2%] w-[46px] h-[46px] sm:w-[64px] sm:h-[64px] lg:w-[72px] lg:h-[72px] xl:w-[80px] xl:h-[80px] rounded-[14px] sm:rounded-[18px] lg:rounded-[20px] flex items-center justify-center z-30 transition-all duration-300 cursor-pointer -rotate-[4deg] hover:rotate-0 hover:scale-108 ${
+                onFocus={() => setHoveredOrbitId('python')}
+                onBlur={() => setHoveredOrbitId(null)}
+                onClick={() => toggleOrbitSelection('python')}
+                onKeyDown={(e) => handleOrbitKeyDown(e, 'python')}
+                className={`skills-float-slow absolute left-[23.2%] top-[15.2%] w-[46px] h-[46px] sm:w-[64px] sm:h-[64px] lg:w-[72px] lg:h-[72px] xl:w-[80px] xl:h-[80px] rounded-[14px] sm:rounded-[18px] lg:rounded-[20px] flex items-center justify-center z-30 transition-all duration-300 cursor-pointer -rotate-[4deg] hover:rotate-0 hover:scale-108 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E56812] ${
                   isOrbitHighlighted('python')
                     ? 'skills-floating-tile-active scale-108'
                     : 'skills-floating-tile'
@@ -484,9 +539,17 @@ export const SkillsTechStackSection: React.FC = () => {
 
               {/* 4. OpenAI Tile (Top-Center Orbit) */}
               <div
+                role="button"
+                tabIndex={0}
+                aria-label="OpenAI and Generative AI waypoint"
+                aria-pressed={selectedOrbitId === 'openai'}
                 onMouseEnter={() => setHoveredOrbitId('openai')}
                 onMouseLeave={() => setHoveredOrbitId(null)}
-                className={`skills-float-medium absolute left-[44.8%] top-[5.2%] w-[48px] h-[48px] sm:w-[66px] sm:h-[66px] lg:w-[74px] lg:h-[74px] xl:w-[82px] xl:h-[82px] rounded-[15px] sm:rounded-[19px] lg:rounded-[21px] flex items-center justify-center z-30 transition-all duration-300 cursor-pointer rotate-[2deg] hover:rotate-0 hover:scale-108 text-[#1A130E] ${
+                onFocus={() => setHoveredOrbitId('openai')}
+                onBlur={() => setHoveredOrbitId(null)}
+                onClick={() => toggleOrbitSelection('openai')}
+                onKeyDown={(e) => handleOrbitKeyDown(e, 'openai')}
+                className={`skills-float-medium absolute left-[44.8%] top-[5.2%] w-[48px] h-[48px] sm:w-[66px] sm:h-[66px] lg:w-[74px] lg:h-[74px] xl:w-[82px] xl:h-[82px] rounded-[15px] sm:rounded-[19px] lg:rounded-[21px] flex items-center justify-center z-30 transition-all duration-300 cursor-pointer rotate-[2deg] hover:rotate-0 hover:scale-108 text-[#1A130E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E56812] ${
                   isOrbitHighlighted('openai')
                     ? 'skills-floating-tile-active scale-108'
                     : 'skills-floating-tile'
@@ -498,9 +561,17 @@ export const SkillsTechStackSection: React.FC = () => {
 
               {/* 5. React Tile (Upper-Right Orbit) */}
               <div
+                role="button"
+                tabIndex={0}
+                aria-label="React and Frontend Development waypoint"
+                aria-pressed={selectedOrbitId === 'react'}
                 onMouseEnter={() => setHoveredOrbitId('react')}
                 onMouseLeave={() => setHoveredOrbitId(null)}
-                className={`skills-float-slow absolute left-[72.0%] top-[10.8%] w-[48px] h-[48px] sm:w-[66px] sm:h-[66px] lg:w-[74px] lg:h-[74px] xl:w-[82px] xl:h-[82px] rounded-[15px] sm:rounded-[19px] lg:rounded-[21px] flex items-center justify-center z-30 transition-all duration-300 cursor-pointer rotate-[4deg] hover:rotate-0 hover:scale-108 ${
+                onFocus={() => setHoveredOrbitId('react')}
+                onBlur={() => setHoveredOrbitId(null)}
+                onClick={() => toggleOrbitSelection('react')}
+                onKeyDown={(e) => handleOrbitKeyDown(e, 'react')}
+                className={`skills-float-slow absolute left-[72.0%] top-[10.8%] w-[48px] h-[48px] sm:w-[66px] sm:h-[66px] lg:w-[74px] lg:h-[74px] xl:w-[82px] xl:h-[82px] rounded-[15px] sm:rounded-[19px] lg:rounded-[21px] flex items-center justify-center z-30 transition-all duration-300 cursor-pointer rotate-[4deg] hover:rotate-0 hover:scale-108 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E56812] ${
                   isOrbitHighlighted('react')
                     ? 'skills-floating-tile-active scale-108'
                     : 'skills-floating-tile'
@@ -512,9 +583,17 @@ export const SkillsTechStackSection: React.FC = () => {
 
               {/* 6. Programming / Code </> Tile (Mid-Right Orbit) */}
               <div
+                role="button"
+                tabIndex={0}
+                aria-label="Programming and Problem Solving waypoint"
+                aria-pressed={selectedOrbitId === 'code'}
                 onMouseEnter={() => setHoveredOrbitId('code')}
                 onMouseLeave={() => setHoveredOrbitId(null)}
-                className={`skills-float-delayed absolute left-[79.0%] top-[32.5%] w-[45px] h-[45px] sm:w-[62px] sm:h-[62px] lg:w-[70px] lg:h-[70px] xl:w-[78px] xl:h-[78px] rounded-[14px] sm:rounded-[18px] lg:rounded-[20px] flex items-center justify-center z-30 transition-all duration-300 cursor-pointer rotate-[3deg] hover:rotate-0 hover:scale-108 ${
+                onFocus={() => setHoveredOrbitId('code')}
+                onBlur={() => setHoveredOrbitId(null)}
+                onClick={() => toggleOrbitSelection('code')}
+                onKeyDown={(e) => handleOrbitKeyDown(e, 'code')}
+                className={`skills-float-delayed absolute left-[79.0%] top-[32.5%] w-[45px] h-[45px] sm:w-[62px] sm:h-[62px] lg:w-[70px] lg:h-[70px] xl:w-[78px] xl:h-[78px] rounded-[14px] sm:rounded-[18px] lg:rounded-[20px] flex items-center justify-center z-30 transition-all duration-300 cursor-pointer rotate-[3deg] hover:rotate-0 hover:scale-108 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E56812] ${
                   isOrbitHighlighted('code')
                     ? 'skills-floating-tile-active scale-108'
                     : 'skills-floating-tile'
@@ -526,9 +605,17 @@ export const SkillsTechStackSection: React.FC = () => {
 
               {/* 7. Database Tile (Lower-Right Orbit) */}
               <div
+                role="button"
+                tabIndex={0}
+                aria-label="Database and Business Analysis waypoint"
+                aria-pressed={selectedOrbitId === 'database'}
                 onMouseEnter={() => setHoveredOrbitId('database')}
                 onMouseLeave={() => setHoveredOrbitId(null)}
-                className={`skills-float-medium absolute left-[71.2%] top-[53.5%] w-[44px] h-[44px] sm:w-[60px] sm:h-[60px] lg:w-[66px] lg:h-[66px] xl:w-[74px] xl:h-[74px] rounded-[14px] sm:rounded-[18px] lg:rounded-[20px] flex items-center justify-center z-30 transition-all duration-300 cursor-pointer rotate-[2deg] hover:rotate-0 hover:scale-108 ${
+                onFocus={() => setHoveredOrbitId('database')}
+                onBlur={() => setHoveredOrbitId(null)}
+                onClick={() => toggleOrbitSelection('database')}
+                onKeyDown={(e) => handleOrbitKeyDown(e, 'database')}
+                className={`skills-float-medium absolute left-[71.2%] top-[53.5%] w-[44px] h-[44px] sm:w-[60px] sm:h-[60px] lg:w-[66px] lg:h-[66px] xl:w-[74px] xl:h-[74px] rounded-[14px] sm:rounded-[18px] lg:rounded-[20px] flex items-center justify-center z-30 transition-all duration-300 cursor-pointer rotate-[2deg] hover:rotate-0 hover:scale-108 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E56812] ${
                   isOrbitHighlighted('database')
                     ? 'skills-floating-tile-active scale-108'
                     : 'skills-floating-tile'
@@ -556,84 +643,64 @@ export const SkillsTechStackSection: React.FC = () => {
             />
           </div>
 
-          {/* 7 Core Skill Pills Row */}
-          <div className="flex flex-wrap xl:flex-nowrap items-center justify-start xl:justify-between gap-3 sm:gap-3.5">
+          {/* 7 Core Skill Pills Row (Semantic List of Skill Badges) */}
+          <div
+            role="list"
+            aria-label="Core skills"
+            className="flex flex-wrap xl:flex-nowrap items-center justify-start xl:justify-between gap-3 sm:gap-3.5"
+          >
             {/* 1. Python */}
-            <button
-              type="button"
-              onMouseEnter={() => {
-                setHoveredSkillId('python');
-                setHoveredOrbitId('python');
-              }}
-              onMouseLeave={() => {
-                setHoveredSkillId(null);
-                setHoveredOrbitId(null);
-              }}
-              className={`skills-core-pill h-[50px] sm:h-[56px] px-4 sm:px-5 xl:px-5.5 rounded-full inline-flex items-center gap-2.5 sm:gap-3 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer shrink-0 ${
-                hoveredOrbitId === 'python' ? 'skills-core-pill-active -translate-y-0.5' : ''
+            <div
+              role="listitem"
+              onMouseEnter={() => setHoveredSkillId('python')}
+              onMouseLeave={() => setHoveredSkillId(null)}
+              className={`skills-core-pill h-[50px] sm:h-[56px] px-4 sm:px-5 xl:px-5.5 rounded-full inline-flex items-center gap-2.5 sm:gap-3 transition-all duration-200 hover:-translate-y-0.5 shrink-0 ${
+                activeOrbitId === 'python' ? 'skills-core-pill-active -translate-y-0.5' : ''
               }`}
             >
               <PythonLogo className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
               <span className="text-[13.5px] sm:text-[14.5px] font-medium text-[#211108] whitespace-nowrap">
                 Python
               </span>
-            </button>
+            </div>
 
             {/* 2. Generative AI */}
-            <button
-              type="button"
-              onMouseEnter={() => {
-                setHoveredSkillId('genai');
-                setHoveredOrbitId('openai');
-              }}
-              onMouseLeave={() => {
-                setHoveredSkillId(null);
-                setHoveredOrbitId(null);
-              }}
-              className={`skills-core-pill h-[50px] sm:h-[56px] px-4 sm:px-5 xl:px-5.5 rounded-full inline-flex items-center gap-2.5 sm:gap-3 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer shrink-0 ${
-                hoveredOrbitId === 'openai' ? 'skills-core-pill-active -translate-y-0.5' : ''
+            <div
+              role="listitem"
+              onMouseEnter={() => setHoveredSkillId('genai')}
+              onMouseLeave={() => setHoveredSkillId(null)}
+              className={`skills-core-pill h-[50px] sm:h-[56px] px-4 sm:px-5 xl:px-5.5 rounded-full inline-flex items-center gap-2.5 sm:gap-3 transition-all duration-200 hover:-translate-y-0.5 shrink-0 ${
+                activeOrbitId === 'openai' ? 'skills-core-pill-active -translate-y-0.5' : ''
               }`}
             >
               <OpenAILogo className="w-5 h-5 sm:w-6 sm:h-6 text-[#1A130E] shrink-0" />
               <span className="text-[13.5px] sm:text-[14.5px] font-medium text-[#211108] whitespace-nowrap">
                 Generative AI
               </span>
-            </button>
+            </div>
 
             {/* 3. Data Analytics */}
-            <button
-              type="button"
-              onMouseEnter={() => {
-                setHoveredSkillId('analytics');
-                setHoveredOrbitId('analytics');
-              }}
-              onMouseLeave={() => {
-                setHoveredSkillId(null);
-                setHoveredOrbitId(null);
-              }}
-              className={`skills-core-pill h-[50px] sm:h-[56px] px-4 sm:px-5 xl:px-5.5 rounded-full inline-flex items-center gap-2.5 sm:gap-3 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer shrink-0 ${
-                hoveredOrbitId === 'analytics' ? 'skills-core-pill-active -translate-y-0.5' : ''
+            <div
+              role="listitem"
+              onMouseEnter={() => setHoveredSkillId('analytics')}
+              onMouseLeave={() => setHoveredSkillId(null)}
+              className={`skills-core-pill h-[50px] sm:h-[56px] px-4 sm:px-5 xl:px-5.5 rounded-full inline-flex items-center gap-2.5 sm:gap-3 transition-all duration-200 hover:-translate-y-0.5 shrink-0 ${
+                activeOrbitId === 'analytics' ? 'skills-core-pill-active -translate-y-0.5' : ''
               }`}
             >
               <AnalyticsBarsLogo className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
               <span className="text-[13.5px] sm:text-[14.5px] font-medium text-[#211108] whitespace-nowrap">
                 Data Analytics
               </span>
-            </button>
+            </div>
 
             {/* 4. Frontend Development */}
-            <button
-              type="button"
-              onMouseEnter={() => {
-                setHoveredSkillId('frontend');
-                setHoveredOrbitId('react');
-              }}
-              onMouseLeave={() => {
-                setHoveredSkillId(null);
-                setHoveredOrbitId(null);
-              }}
-              className={`skills-core-pill h-[50px] sm:h-[56px] px-4 sm:px-5 xl:px-5.5 rounded-full inline-flex items-center gap-2.5 sm:gap-3 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer shrink-0 ${
-                hoveredOrbitId === 'react' ? 'skills-core-pill-active -translate-y-0.5' : ''
+            <div
+              role="listitem"
+              onMouseEnter={() => setHoveredSkillId('frontend')}
+              onMouseLeave={() => setHoveredSkillId(null)}
+              className={`skills-core-pill h-[50px] sm:h-[56px] px-4 sm:px-5 xl:px-5.5 rounded-full inline-flex items-center gap-2.5 sm:gap-3 transition-all duration-200 hover:-translate-y-0.5 shrink-0 ${
+                activeOrbitId === 'react' ? 'skills-core-pill-active -translate-y-0.5' : ''
               }`}
             >
               <CodeBracketsLogo
@@ -643,21 +710,15 @@ export const SkillsTechStackSection: React.FC = () => {
               <span className="text-[13.5px] sm:text-[14.5px] font-medium text-[#211108] whitespace-nowrap">
                 Frontend Development
               </span>
-            </button>
+            </div>
 
             {/* 5. Problem Solving */}
-            <button
-              type="button"
-              onMouseEnter={() => {
-                setHoveredSkillId('problem-solving');
-                setHoveredOrbitId('code');
-              }}
-              onMouseLeave={() => {
-                setHoveredSkillId(null);
-                setHoveredOrbitId(null);
-              }}
-              className={`skills-core-pill h-[50px] sm:h-[56px] px-4 sm:px-5 xl:px-5.5 rounded-full inline-flex items-center gap-2.5 sm:gap-3 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer shrink-0 ${
-                hoveredOrbitId === 'code' ? 'skills-core-pill-active -translate-y-0.5' : ''
+            <div
+              role="listitem"
+              onMouseEnter={() => setHoveredSkillId('problem-solving')}
+              onMouseLeave={() => setHoveredSkillId(null)}
+              className={`skills-core-pill h-[50px] sm:h-[56px] px-4 sm:px-5 xl:px-5.5 rounded-full inline-flex items-center gap-2.5 sm:gap-3 transition-all duration-200 hover:-translate-y-0.5 shrink-0 ${
+                activeOrbitId === 'code' ? 'skills-core-pill-active -translate-y-0.5' : ''
               }`}
             >
               {/* Glowing Orange Lightbulb Icon */}
@@ -672,21 +733,15 @@ export const SkillsTechStackSection: React.FC = () => {
               <span className="text-[13.5px] sm:text-[14.5px] font-medium text-[#211108] whitespace-nowrap">
                 Problem Solving
               </span>
-            </button>
+            </div>
 
             {/* 6. Remote Sensing */}
-            <button
-              type="button"
-              onMouseEnter={() => {
-                setHoveredSkillId('remote-sensing');
-                setHoveredOrbitId('aws');
-              }}
-              onMouseLeave={() => {
-                setHoveredSkillId(null);
-                setHoveredOrbitId(null);
-              }}
-              className={`skills-core-pill h-[50px] sm:h-[56px] px-4 sm:px-5 xl:px-5.5 rounded-full inline-flex items-center gap-2.5 sm:gap-3 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer shrink-0 ${
-                hoveredOrbitId === 'aws' ? 'skills-core-pill-active -translate-y-0.5' : ''
+            <div
+              role="listitem"
+              onMouseEnter={() => setHoveredSkillId('remote-sensing')}
+              onMouseLeave={() => setHoveredSkillId(null)}
+              className={`skills-core-pill h-[50px] sm:h-[56px] px-4 sm:px-5 xl:px-5.5 rounded-full inline-flex items-center gap-2.5 sm:gap-3 transition-all duration-200 hover:-translate-y-0.5 shrink-0 ${
+                activeOrbitId === 'aws' ? 'skills-core-pill-active -translate-y-0.5' : ''
               }`}
             >
               {/* Orange Satellite Icon */}
@@ -709,21 +764,15 @@ export const SkillsTechStackSection: React.FC = () => {
               <span className="text-[13.5px] sm:text-[14.5px] font-medium text-[#211108] whitespace-nowrap">
                 Remote Sensing
               </span>
-            </button>
+            </div>
 
             {/* 7. Business Analysis */}
-            <button
-              type="button"
-              onMouseEnter={() => {
-                setHoveredSkillId('business-analysis');
-                setHoveredOrbitId('database');
-              }}
-              onMouseLeave={() => {
-                setHoveredSkillId(null);
-                setHoveredOrbitId(null);
-              }}
-              className={`skills-core-pill h-[50px] sm:h-[56px] px-4 sm:px-5 xl:px-5.5 rounded-full inline-flex items-center gap-2.5 sm:gap-3 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer shrink-0 ${
-                hoveredOrbitId === 'database' ? 'skills-core-pill-active -translate-y-0.5' : ''
+            <div
+              role="listitem"
+              onMouseEnter={() => setHoveredSkillId('business-analysis')}
+              onMouseLeave={() => setHoveredSkillId(null)}
+              className={`skills-core-pill h-[50px] sm:h-[56px] px-4 sm:px-5 xl:px-5.5 rounded-full inline-flex items-center gap-2.5 sm:gap-3 transition-all duration-200 hover:-translate-y-0.5 shrink-0 ${
+                activeOrbitId === 'database' ? 'skills-core-pill-active -translate-y-0.5' : ''
               }`}
             >
               {/* Orange Briefcase Icon */}
@@ -738,7 +787,7 @@ export const SkillsTechStackSection: React.FC = () => {
               <span className="text-[13.5px] sm:text-[14.5px] font-medium text-[#211108] whitespace-nowrap">
                 Business Analysis
               </span>
-            </button>
+            </div>
           </div>
         </div>
       </div>

@@ -1,4 +1,10 @@
-import React, { useState } from 'react';
+/**
+ * ProjectsSection.tsx — Section 4: Editorial Project Gallery ("04 — PROJECTS")
+ * Renders the 3D floating project showcase (BioScout, SpeakPR, BrightLoop initial trio),
+ * sweeping golden orbital rings, carousel controls, and interactive case-study modals
+ * for all nine real portfolio projects.
+ */
+import React, { useEffect, useRef, useState } from 'react';
 
 export interface PortfolioProject {
   id: string;
@@ -27,7 +33,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     category: 'Developer Tools · Generative AI',
     shortCategoryBadge: 'Developer Tools · Gen AI',
     categoryIcon: 'sparkle',
-    backdropImage: '/project-art-ai-wave.jpg',
+    backdropImage: 'project-art-ai-wave.jpg',
     darkArtworkBg: true,
     description:
       'A voice-first tool that writes pull request descriptions. Paste a code diff or GitHub PR link, speak your reasoning using Wispr Flow, and SpeakPR generates a PR description, changelog and review flags.',
@@ -49,7 +55,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     category: 'AI · Biodiversity · Computer Vision',
     shortCategoryBadge: 'AI · Biodiversity · CV',
     categoryIcon: 'globe',
-    backdropImage: '/project-art-remote-sensing.jpg',
+    backdropImage: 'project-art-remote-sensing.jpg',
     darkArtworkBg: false,
     description:
       'An AI-powered biodiversity platform that lets anyone become a wildlife explorer. Upload an animal photograph to identify its species and discover information about its conservation status, rarity and other wildlife facts.',
@@ -70,7 +76,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     category: 'Full-Stack Development · SaaS',
     shortCategoryBadge: 'Full-Stack · SaaS',
     categoryIcon: 'chart',
-    backdropImage: '/project-art-analytics.jpg',
+    backdropImage: 'project-art-analytics.jpg',
     darkArtworkBg: false,
     description:
       'A full-stack subscription billing and management platform featuring customer management, subscription plans, automated invoicing, payment tracking, discounts, tax management and financial reporting.',
@@ -97,7 +103,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     category: 'AI · Social Impact',
     shortCategoryBadge: 'AI · Social Impact',
     categoryIcon: 'heart',
-    backdropImage: '/project-art-ai-wave.jpg',
+    backdropImage: 'project-art-ai-wave.jpg',
     darkArtworkBg: true,
     description:
       'An AI-powered prototype designed to help reconnect people separated by displacement, adoption or estrangement. Users describe their memories in their own words. AI transforms those fragments into structured profiles that users can review and edit. The system surfaces potential connections using information-similarity scores for human moderator review.',
@@ -119,7 +125,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     category: 'Accessibility · Computer Vision',
     shortCategoryBadge: 'Accessibility · CV',
     categoryIcon: 'eye',
-    backdropImage: '/project-art-remote-sensing.jpg',
+    backdropImage: 'project-art-remote-sensing.jpg',
     darkArtworkBg: true,
     description:
       'A CPU-based assistive-vision prototype that uses a webcam to help interpret the surrounding environment. Runs locally on the CPU with spoken output for detected information.',
@@ -142,7 +148,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     category: 'Generative AI · Civic Technology',
     shortCategoryBadge: 'Gen AI · Civic Tech',
     categoryIcon: 'landmark',
-    backdropImage: '/project-art-ai-wave.jpg',
+    backdropImage: 'project-art-ai-wave.jpg',
     darkArtworkBg: true,
     description:
       'An AI-powered civic assistant that brings government services into one place. Built with Gemini to provide guidance for government-document applications, official links, citizen problem reporting, and answers about government schemes.',
@@ -165,7 +171,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     category: 'AI · Business Intelligence',
     shortCategoryBadge: 'AI · Business Intel',
     categoryIcon: 'compass',
-    backdropImage: '/project-art-analytics.jpg',
+    backdropImage: 'project-art-analytics.jpg',
     darkArtworkBg: false,
     description:
       'An AI-powered business decision-making platform. Describe a business decision and its available options, and DecisIQ analyzes the alternatives and recommends a choice with clear reasoning.',
@@ -185,7 +191,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     category: 'AI · Healthcare Technology',
     shortCategoryBadge: 'AI · Healthcare Tech',
     categoryIcon: 'shield',
-    backdropImage: '/project-art-ai-wave.jpg',
+    backdropImage: 'project-art-ai-wave.jpg',
     darkArtworkBg: true,
     description:
       'An AI-powered healthcare platform that evaluates health-related claims commonly shared through WhatsApp forwards. Users can check claims, such as whether a particular home remedy is supported by evidence, and receive an explanation. It also allows users to describe symptoms and receive possible causes and general guidance.',
@@ -208,7 +214,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     category: 'Frontend Development · UI/UX',
     shortCategoryBadge: 'Frontend · UI/UX',
     categoryIcon: 'layers',
-    backdropImage: '/project-art-analytics.jpg',
+    backdropImage: 'project-art-analytics.jpg',
     darkArtworkBg: true,
     description:
       'A responsive product landing page built using React and Vite featuring a hero section, product feature sections, interactive monthly/annual pricing toggle, multi-currency selector, testimonials, footer, and 3D hover effects.',
@@ -223,6 +229,9 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   },
 ];
 
+/**
+ * Renders the category badge icon corresponding to a project's domain.
+ */
 function CategoryBadgeIcon({
   type,
   size = 'sm',
@@ -341,7 +350,8 @@ function ProjectPreviewViewport({
       {/* Base Studio Card Artwork matching the reference palette & lighting */}
       <img
         src={project.backdropImage}
-        alt={project.title}
+        alt={`${project.title} — ${project.category} preview`}
+        loading="lazy"
         className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
         draggable={false}
       />
@@ -460,6 +470,10 @@ function ProjectPreviewViewport({
   );
 }
 
+/**
+ * Renders Section 4 (Projects) with a 3D floating card carousel, project case-study modal,
+ * and complete 9-project filterable archive modal.
+ */
 export function ProjectsSection() {
   // Recommended project order (0..8):
   // 0: SpeakPR, 1: BioScout, 2: BrightLoop, 3: ThreadBack, 4: Netra,
@@ -474,6 +488,97 @@ export function ProjectsSection() {
   const [isAllProjectsOpen, setIsAllProjectsOpen] = useState<boolean>(false);
   const [activeCategoryFilter, setActiveCategoryFilter] = useState<string>('All');
 
+  const caseStudyModalRef = useRef<HTMLDivElement | null>(null);
+  const caseStudyCloseBtnRef = useRef<HTMLButtonElement | null>(null);
+  const allProjectsModalRef = useRef<HTMLDivElement | null>(null);
+  const allProjectsCloseBtnRef = useRef<HTMLButtonElement | null>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  /**
+   * Opens the project case-study modal and stores the currently focused trigger element.
+   */
+  const openProjectModal = (project: PortfolioProject) => {
+    if (!selectedProject && !isAllProjectsOpen && document.activeElement instanceof HTMLElement) {
+      previousFocusRef.current = document.activeElement;
+    }
+    setSelectedProject(project);
+  };
+
+  /**
+   * Closes the project case-study modal and restores keyboard focus to the trigger element.
+   */
+  const closeProjectModal = () => {
+    setSelectedProject(null);
+    const toRestore = previousFocusRef.current;
+    if (toRestore) {
+      window.setTimeout(() => toRestore.focus(), 0);
+    }
+  };
+
+  /**
+   * Opens the complete 9-project archive modal and stores the currently focused trigger element.
+   */
+  const openAllProjectsModal = () => {
+    if (document.activeElement instanceof HTMLElement) {
+      previousFocusRef.current = document.activeElement;
+    }
+    setIsAllProjectsOpen(true);
+  };
+
+  /**
+   * Closes the complete 9-project archive modal and restores keyboard focus to the trigger element.
+   */
+  const closeAllProjectsModal = () => {
+    setIsAllProjectsOpen(false);
+    const toRestore = previousFocusRef.current;
+    if (toRestore) {
+      window.setTimeout(() => toRestore.focus(), 0);
+    }
+  };
+
+  useEffect(() => {
+    const isAnyModalOpen = Boolean(selectedProject) || isAllProjectsOpen;
+    if (!isAnyModalOpen) return;
+
+    const targetCloseBtn = selectedProject ? caseStudyCloseBtnRef.current : allProjectsCloseBtnRef.current;
+    targetCloseBtn?.focus();
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        if (selectedProject) {
+          closeProjectModal();
+        } else if (isAllProjectsOpen) {
+          closeAllProjectsModal();
+        }
+        return;
+      }
+
+      if (e.key === 'Tab') {
+        const container = selectedProject ? caseStudyModalRef.current : allProjectsModalRef.current;
+        if (!container) return;
+        const focusables = Array.from(
+          container.querySelectorAll<HTMLElement>(
+            'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+          )
+        );
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedProject, isAllProjectsOpen]);
+
   const total = PORTFOLIO_PROJECTS.length;
 
   // When SpeakPR (index 0) is in the center slot, display BioScout (index 1) on the left
@@ -486,10 +591,16 @@ export function ProjectsSection() {
   const centerProject = PORTFOLIO_PROJECTS[centerIndex];
   const rightProject = PORTFOLIO_PROJECTS[rightIndex];
 
+  /**
+   * Rotates the 3D project carousel to the previous project in the list.
+   */
   const handlePrev = () => {
     setCenterIndex((prev) => (prev - 1 + total) % total);
   };
 
+  /**
+   * Rotates the 3D project carousel to the next project in the list.
+   */
   const handleNext = () => {
     setCenterIndex((prev) => (prev + 1) % total);
   };
@@ -503,6 +614,9 @@ export function ProjectsSection() {
     'Frontend & BI',
   ];
 
+  /**
+   * Evaluates whether a project matches the currently selected category filter tab.
+   */
   const matchesFilter = (proj: PortfolioProject, filter: string) => {
     if (filter === 'All') return true;
     if (filter === 'Generative AI') {
@@ -714,8 +828,8 @@ export function ProjectsSection() {
             {/* Primary CTA Button: View All Projects ↗ */}
             <button
               type="button"
-              onClick={() => setIsAllProjectsOpen(true)}
-              className="projects-cta-pill group inline-flex items-center gap-4 px-8 sm:px-9 py-4 sm:py-[18px] rounded-full transition-all duration-300 cursor-pointer active:scale-[0.98]"
+              onClick={openAllProjectsModal}
+              className="projects-cta-pill group inline-flex items-center gap-4 px-8 sm:px-9 py-4 sm:py-[18px] rounded-full transition-all duration-300 cursor-pointer active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFFDF9]"
             >
               <span className="text-[15px] sm:text-[16px] font-semibold tracking-[-0.01em] text-[#1E120A]">
                 View All Projects
@@ -848,17 +962,17 @@ export function ProjectsSection() {
                 CARD 1 (LEFT SLOT): PERSPECTIVE SIDE SHOWCASE CARD
             ---------------------------------------------------------------- */}
             <div
-              onClick={() => setSelectedProject(leftProject)}
+              onClick={() => openProjectModal(leftProject)}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
-                  setSelectedProject(leftProject);
+                  openProjectModal(leftProject);
                 }
               }}
               aria-label={`Open project details: ${leftProject.title}`}
-              className="projects-card-left group absolute left-[3%] sm:left-[5%] lg:left-[4.5%] top-[28%] sm:top-[29%] w-[31%] sm:w-[29.5%] lg:w-[27.5%] max-w-[295px] aspect-[1/1.15] rounded-[20px] sm:rounded-[24px] p-2 sm:p-2.5 flex flex-col justify-between cursor-pointer z-20 overflow-hidden"
+              className="projects-card-left group absolute left-[3%] sm:left-[5%] lg:left-[4.5%] top-[28%] sm:top-[29%] w-[31%] sm:w-[29.5%] lg:w-[27.5%] max-w-[295px] aspect-[1/1.15] rounded-[20px] sm:rounded-[24px] p-2 sm:p-2.5 flex flex-col justify-between cursor-pointer z-20 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFFDF9]"
             >
               {/* Top Specular Edge Highlight */}
               <div
@@ -886,7 +1000,7 @@ export function ProjectsSection() {
                 </div>
               </div>
 
-              {/* Card Footer: Editorial Serif Title + Circular ↗ Action Button */}
+              {/* Card Footer: Editorial Serif Title + Circular ↗ Action Indicator */}
               <div className="relative z-20 flex items-end justify-between gap-2 px-2 sm:px-3 pb-1.5 sm:pb-2.5 pt-1">
                 <h3 className="font-serif-editorial text-[1.05rem] sm:text-[1.35rem] lg:text-[1.45rem] xl:text-[1.58rem] leading-[1.08] tracking-[-0.02em] font-normal text-[#1E1007]">
                   {leftProject.shortTitleLines ? (
@@ -899,14 +1013,9 @@ export function ProjectsSection() {
                   )}
                 </h3>
 
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedProject(leftProject);
-                  }}
-                  aria-label={`Inspect ${leftProject.title}`}
-                  className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-[#4A2C16]/35 bg-white/35 hover:bg-white/80 flex items-center justify-center text-[#2B1608] transition-all duration-200 shrink-0 cursor-pointer"
+                <span
+                  aria-hidden="true"
+                  className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-[#4A2C16]/35 bg-white/35 hover:bg-white/80 flex items-center justify-center text-[#2B1608] transition-all duration-200 shrink-0"
                 >
                   <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none">
                     <path
@@ -917,7 +1026,7 @@ export function ProjectsSection() {
                       strokeLinejoin="round"
                     />
                   </svg>
-                </button>
+                </span>
               </div>
             </div>
 
@@ -925,17 +1034,17 @@ export function ProjectsSection() {
                 CARD 2 (CENTER SLOT): DOMINANT FEATURED HERO CARD
             ---------------------------------------------------------------- */}
             <div
-              onClick={() => setSelectedProject(centerProject)}
+              onClick={() => openProjectModal(centerProject)}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
-                  setSelectedProject(centerProject);
+                  openProjectModal(centerProject);
                 }
               }}
               aria-label={`View featured project: ${centerProject.title}`}
-              className="projects-card-center group absolute left-[24%] sm:left-[25.5%] lg:left-[24.5%] top-[12%] sm:top-[11%] w-[49%] sm:w-[47%] lg:w-[46.5%] max-w-[490px] aspect-[1/1.05] rounded-[24px] sm:rounded-[30px] p-2 sm:p-2.5 flex flex-col justify-between cursor-pointer z-30 overflow-hidden"
+              className="projects-card-center group absolute left-[24%] sm:left-[25.5%] lg:left-[24.5%] top-[12%] sm:top-[11%] w-[49%] sm:w-[47%] lg:w-[46.5%] max-w-[490px] aspect-[1/1.05] rounded-[24px] sm:rounded-[30px] p-2 sm:p-2.5 flex flex-col justify-between cursor-pointer z-30 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFFDF9]"
             >
               {/* Luminous Top & Right Rim Highlights matching the reference */}
               <div
@@ -971,20 +1080,15 @@ export function ProjectsSection() {
                 </div>
               </div>
 
-              {/* Featured Card Footer: Large Editorial Serif Title + Circular ↗ Button */}
+              {/* Featured Card Footer: Large Editorial Serif Title + Circular ↗ Indicator */}
               <div className="relative z-20 flex items-center justify-between gap-3 px-3 sm:px-5 pb-2 sm:pb-3.5 pt-1">
                 <h3 className="font-serif-editorial text-[1.35rem] sm:text-[1.85rem] lg:text-[2.05rem] xl:text-[2.25rem] leading-[1.06] tracking-[-0.022em] font-semibold text-[#180C05] truncate">
                   {centerProject.title}
                 </h3>
 
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedProject(centerProject);
-                  }}
-                  aria-label={`Open ${centerProject.title} project details`}
-                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-[#2C180B]/55 bg-white/30 group-hover:bg-[#1E1007] group-hover:text-[#FFF8F0] group-hover:border-[#1E1007] flex items-center justify-center text-[#1B0E06] transition-all duration-300 shrink-0 cursor-pointer"
+                <span
+                  aria-hidden="true"
+                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-[#2C180B]/55 bg-white/30 group-hover:bg-[#1E1007] group-hover:text-[#FFF8F0] group-hover:border-[#1E1007] flex items-center justify-center text-[#1B0E06] transition-all duration-300 shrink-0"
                 >
                   <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none">
                     <path
@@ -995,7 +1099,7 @@ export function ProjectsSection() {
                       strokeLinejoin="round"
                     />
                   </svg>
-                </button>
+                </span>
               </div>
             </div>
 
@@ -1003,17 +1107,17 @@ export function ProjectsSection() {
                 CARD 3 (RIGHT SLOT): PERSPECTIVE SIDE SHOWCASE CARD
             ---------------------------------------------------------------- */}
             <div
-              onClick={() => setSelectedProject(rightProject)}
+              onClick={() => openProjectModal(rightProject)}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
-                  setSelectedProject(rightProject);
+                  openProjectModal(rightProject);
                 }
               }}
               aria-label={`Open project details: ${rightProject.title}`}
-              className="projects-card-right group absolute right-[1.5%] sm:right-[2.5%] lg:right-[2%] top-[21%] sm:top-[22%] w-[31%] sm:w-[29.5%] lg:w-[28%] max-w-[300px] aspect-[1/1.18] rounded-[20px] sm:rounded-[24px] p-2 sm:p-2.5 flex flex-col justify-between cursor-pointer z-20 overflow-hidden"
+              className="projects-card-right group absolute right-[1.5%] sm:right-[2.5%] lg:right-[2%] top-[21%] sm:top-[22%] w-[31%] sm:w-[29.5%] lg:w-[28%] max-w-[300px] aspect-[1/1.18] rounded-[20px] sm:rounded-[24px] p-2 sm:p-2.5 flex flex-col justify-between cursor-pointer z-20 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFFDF9]"
             >
               {/* Top-Right Bright Specular Rim Highlight */}
               <div
@@ -1044,20 +1148,15 @@ export function ProjectsSection() {
                 </div>
               </div>
 
-              {/* Card Footer: Editorial Serif Title + Circular ↗ Action Button */}
+              {/* Card Footer: Editorial Serif Title + Circular ↗ Action Indicator */}
               <div className="relative z-20 flex items-center justify-between gap-2 px-2 sm:px-3 pb-1.5 sm:pb-2.5 pt-1">
                 <h3 className="font-serif-editorial text-[1.02rem] sm:text-[1.28rem] lg:text-[1.38rem] xl:text-[1.48rem] leading-[1.12] tracking-[-0.02em] font-normal text-[#1E1007] truncate">
                   {rightProject.title}
                 </h3>
 
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedProject(rightProject);
-                  }}
-                  aria-label={`Inspect ${rightProject.title}`}
-                  className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-[#4A2C16]/40 bg-white/35 hover:bg-white/80 flex items-center justify-center text-[#2B1608] transition-all duration-200 shrink-0 cursor-pointer"
+                <span
+                  aria-hidden="true"
+                  className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-[#4A2C16]/40 bg-white/35 hover:bg-white/80 flex items-center justify-center text-[#2B1608] transition-all duration-200 shrink-0"
                 >
                   <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none">
                     <path
@@ -1068,7 +1167,7 @@ export function ProjectsSection() {
                       strokeLinejoin="round"
                     />
                   </svg>
-                </button>
+                </span>
               </div>
             </div>
 
@@ -1130,7 +1229,7 @@ export function ProjectsSection() {
                 type="button"
                 onClick={handlePrev}
                 aria-label="Previous project"
-                className="projects-nav-prev w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-[#2B1608] transition-all duration-200 cursor-pointer active:scale-95"
+                className="projects-nav-prev w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-[#2B1608] transition-all duration-200 cursor-pointer active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFFDF9]"
               >
                 <svg className="w-4 h-4 sm:w-[18px] sm:h-[18px]" viewBox="0 0 24 24" fill="none">
                   <path
@@ -1147,7 +1246,7 @@ export function ProjectsSection() {
                 type="button"
                 onClick={handleNext}
                 aria-label="Next project"
-                className="projects-nav-next w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-[#FFFDF9] transition-all duration-200 cursor-pointer active:scale-95"
+                className="projects-nav-next w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-[#FFFDF9] transition-all duration-200 cursor-pointer active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFFDF9]"
               >
                 <svg className="w-4 h-4 sm:w-[18px] sm:h-[18px]" viewBox="0 0 24 24" fill="none">
                   <path
@@ -1170,12 +1269,13 @@ export function ProjectsSection() {
       {selectedProject && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#1A0B03]/75 backdrop-blur-md select-text"
-          onClick={() => setSelectedProject(null)}
+          onClick={closeProjectModal}
           role="dialog"
           aria-modal="true"
           aria-labelledby="project-modal-title"
         >
           <div
+            ref={caseStudyModalRef}
             className="relative w-full max-w-2xl rounded-[28px] bg-gradient-to-b from-[#FFFDF9] to-[#FDECD8] border border-white shadow-[0_32px_80px_rgba(40,12,2,0.58)] overflow-hidden text-[#1E1108]"
             onClick={(e) => e.stopPropagation()}
           >
@@ -1186,10 +1286,11 @@ export function ProjectsSection() {
 
               {/* Close Button */}
               <button
+                ref={caseStudyCloseBtnRef}
                 type="button"
-                onClick={() => setSelectedProject(null)}
+                onClick={closeProjectModal}
                 aria-label="Close project details"
-                className="absolute top-4 right-4 z-30 w-10 h-10 rounded-full bg-black/50 hover:bg-black/75 text-white border border-white/25 flex items-center justify-center transition-colors cursor-pointer"
+                className="absolute top-4 right-4 z-30 w-10 h-10 rounded-full bg-black/50 hover:bg-black/75 text-white border border-white/25 flex items-center justify-center transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
                   <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -1220,12 +1321,12 @@ export function ProjectsSection() {
             <div className="p-6 sm:p-8 space-y-5 max-h-[66vh] overflow-y-auto">
               {/* External Action Links: View Live Demo (when available) & View GitHub Repository */}
               <div className="flex flex-wrap items-center gap-3 pb-2 border-b border-[#E8B98A]/40">
-                {selectedProject.liveUrl ? (
+                {selectedProject.liveUrl && (
                   <a
                     href={selectedProject.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#E65C00] to-[#C84602] hover:from-[#F2670A] hover:to-[#D84E05] text-white text-xs sm:text-sm font-semibold shadow-md transition-all"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#E65C00] to-[#C84602] hover:from-[#F2670A] hover:to-[#D84E05] text-white text-xs sm:text-sm font-semibold shadow-md transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E65C00]"
                   >
                     <span>View Live Demo</span>
                     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none">
@@ -1238,17 +1339,13 @@ export function ProjectsSection() {
                       />
                     </svg>
                   </a>
-                ) : (
-                  <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F5E0C8] text-[#6E3B18] text-xs font-medium border border-[#E2BA90]">
-                    No Live Demo Currently Available (Local CPU Prototype)
-                  </span>
                 )}
 
                 <a
                   href={selectedProject.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#1E1007] hover:bg-[#321B0D] text-[#FFF8F0] text-xs sm:text-sm font-semibold shadow-sm transition-all"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#1E1007] hover:bg-[#321B0D] text-[#FFF8F0] text-xs sm:text-sm font-semibold shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E65C00]"
                 >
                   <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                     <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
@@ -1320,12 +1417,13 @@ export function ProjectsSection() {
       {isAllProjectsOpen && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#1A0B03]/75 backdrop-blur-md select-text"
-          onClick={() => setIsAllProjectsOpen(false)}
+          onClick={closeAllProjectsModal}
           role="dialog"
           aria-modal="true"
           aria-labelledby="all-projects-modal-title"
         >
           <div
+            ref={allProjectsModalRef}
             className="relative w-full max-w-6xl rounded-[28px] bg-gradient-to-b from-[#FFFDF9] to-[#FDEBD6] border border-white shadow-[0_32px_80px_rgba(40,12,2,0.58)] overflow-hidden text-[#1E1108] p-6 sm:p-8 max-h-[88vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
@@ -1343,10 +1441,11 @@ export function ProjectsSection() {
               </div>
 
               <button
+                ref={allProjectsCloseBtnRef}
                 type="button"
-                onClick={() => setIsAllProjectsOpen(false)}
+                onClick={closeAllProjectsModal}
                 aria-label="Close all projects modal"
-                className="w-10 h-10 rounded-full bg-[#F9DEC0] hover:bg-[#F3C89B] text-[#2B1608] flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                className="w-10 h-10 rounded-full bg-[#F9DEC0] hover:bg-[#F3C89B] text-[#2B1608] flex items-center justify-center transition-colors cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E65C00]"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
                   <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -1361,7 +1460,7 @@ export function ProjectsSection() {
                   key={cat}
                   type="button"
                   onClick={() => setActiveCategoryFilter(cat)}
-                  className={`px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${
+                  className={`px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E65C00] ${
                     activeCategoryFilter === cat
                       ? 'bg-[#DF5A0B] text-white shadow-sm'
                       : 'bg-white/80 hover:bg-white text-[#2B170A] border border-[#E6B88A]/50'
@@ -1421,27 +1520,23 @@ export function ProjectsSection() {
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div className="flex items-center gap-2">
-                      {proj.liveUrl ? (
+                      {proj.liveUrl && (
                         <a
                           href={proj.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#E65C00] hover:bg-[#C84602] text-white text-[11px] font-semibold transition-colors"
+                          className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#E65C00] hover:bg-[#C84602] text-white text-[11px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E65C00]"
                         >
                           <span>Live Demo</span>
                           <span>↗</span>
                         </a>
-                      ) : (
-                        <span className="px-2.5 py-1 rounded-full bg-[#F5E0C8] text-[#6E3B18] text-[10.5px] font-medium">
-                          CPU Prototype
-                        </span>
                       )}
 
                       <a
                         href={proj.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#1E1007] hover:bg-[#361D0D] text-white text-[11px] font-semibold transition-colors"
+                        className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#1E1007] hover:bg-[#361D0D] text-white text-[11px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E65C00]"
                       >
                         <span>GitHub</span>
                         <span>↗</span>
@@ -1456,7 +1551,7 @@ export function ProjectsSection() {
                         setIsAllProjectsOpen(false);
                         setSelectedProject(proj);
                       }}
-                      className="text-[11px] font-semibold text-[#D95407] hover:underline cursor-pointer"
+                      className="text-[11px] font-semibold text-[#D95407] hover:underline cursor-pointer rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E65C00]"
                     >
                       Details
                     </button>

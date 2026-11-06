@@ -1,3 +1,8 @@
+/**
+ * CutoutPortrait.tsx — Studio Cutout Portrait Component (Section 1 Hero)
+ * Verifies and renders the transparent cutout hero portrait (me.png) with
+ * automatic fallback to me.jpg and a styled typographic placeholder.
+ */
 import React, { useEffect, useState } from 'react';
 
 interface CutoutPortraitProps {
@@ -9,13 +14,16 @@ interface CutoutPortraitProps {
  * to the bottom center of the hero container with full hairstyle visibility.
  */
 export const CutoutPortrait: React.FC<CutoutPortraitProps> = ({ className = '' }) => {
-  const [portraitSrc, setPortraitSrc] = useState<string | null>('/me.png?v=4');
+  const [portraitSrc, setPortraitSrc] = useState<string | null>('me.png?v=4');
   const [status, setStatus] = useState<'loading' | 'ready' | 'placeholder'>('ready');
 
   useEffect(() => {
     let isMounted = true;
     let pollTimer: number | undefined;
 
+    /**
+     * Checks whether a given image asset URL loads with valid non-zero dimensions.
+     */
     const verifyImage = (url: string): Promise<boolean> => {
       return new Promise((resolve) => {
         const img = new Image();
@@ -25,17 +33,20 @@ export const CutoutPortrait: React.FC<CutoutPortraitProps> = ({ className = '' }
       });
     };
 
+    /**
+     * Resolves the best available portrait asset using relative case-matching filenames.
+     */
     const resolvePortrait = async () => {
-      if (await verifyImage('/me.png?v=4')) {
+      if (await verifyImage('me.png?v=4')) {
         if (!isMounted) return;
-        setPortraitSrc('/me.png?v=4');
+        setPortraitSrc('me.png?v=4');
         setStatus('ready');
         return;
       }
 
-      if (await verifyImage('/me.jpg')) {
+      if (await verifyImage('me.jpg')) {
         if (!isMounted) return;
-        setPortraitSrc('/me.jpg');
+        setPortraitSrc('me.jpg');
         setStatus('ready');
         return;
       }

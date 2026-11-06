@@ -1,68 +1,25 @@
+/**
+ * App.tsx — Main Portfolio Layout Component
+ * Orchestrates the four portfolio sections for Abhinav Sai Vidadala:
+ *   - Section 1: Hero (#about / #contact-links)
+ *   - Section 2: About Me & My Journey (#achievements / #my-journey)
+ *   - Section 3: Skills & Tech Stack (#skills)
+ *   - Section 4: Projects (#projects)
+ */
 import React, { useState } from 'react';
 import { CutoutPortrait } from './components/CutoutPortrait';
 import { SkillsTechStackSection } from './components/SkillsTechStackSection';
 import { ProjectsSection } from './components/ProjectsSection';
 
-interface ClimbStage {
-  id: 'top50' | 'top10' | 'top3';
-  stageLabel: string;
-  milestone: string;
-  title: string;
-  summary: string;
-  metricLabel: string;
-  metricValue: string;
-}
-
-const CLIMB_STAGES: ClimbStage[] = [
-  {
-    id: 'top50',
-    stageLabel: 'Round 01 · Elimination',
-    milestone: 'Top 50',
-    title: 'Precision Constraint Architecture',
-    summary:
-      'Selected into the Top 50 from the full national applicant pool by designing zero-hallucination multi-step system prompts under strict formatting and token budgets.',
-    metricLabel: 'Advancement Tier',
-    metricValue: 'Top 50 Shortlist',
-  },
-  {
-    id: 'top10',
-    stageLabel: 'Round 02 · Semifinals',
-    milestone: 'Top 10',
-    title: 'Adversarial Edge-Case Hardening',
-    summary:
-      'Climbed from Top 50 to Top 10 by stress-testing reasoning chains against adversarial inputs, ambiguous user intent, and multi-turn state drift.',
-    metricLabel: 'Semifinal Standing',
-    metricValue: 'Top 10 Finalist',
-  },
-  {
-    id: 'top3',
-    stageLabel: 'Round 03 · Grand Finale',
-    milestone: 'Top 3',
-    title: 'CoLab Nation Podium Finish',
-    summary:
-      'Secured a Top 3 Winner podium finish in the CoLab Nation Prompt Engineering Challenge 2026 through live problem decomposition and verifiable output accuracy.',
-    metricLabel: 'Final Result',
-    metricValue: 'Top 3 Winner',
-  },
-];
-
+/**
+ * Root portfolio component managing active navigation state and smooth section scrolling.
+ */
 export default function App() {
-  const [activeClimbIndex, setActiveClimbIndex] = useState<number>(2);
-  const [hasInteractedWithClimb, setHasInteractedWithClimb] = useState<boolean>(false);
   const [activeNav, setActiveNav] = useState<string>('About');
 
-  const currentStage = CLIMB_STAGES[activeClimbIndex];
-
-  const handleStepClimb = (index: number) => {
-    setActiveClimbIndex(index);
-    setHasInteractedWithClimb(true);
-  };
-
-  const handleCycleClimb = () => {
-    setHasInteractedWithClimb(true);
-    setActiveClimbIndex((prev) => (prev + 1) % CLIMB_STAGES.length);
-  };
-
+  /**
+   * Smoothly scrolls the viewport to the target section ID and updates the active nav item.
+   */
   const scrollToSection = (id: string, navLabel: string) => {
     setActiveNav(navLabel);
     const el = document.getElementById(id);
@@ -80,7 +37,7 @@ export default function App() {
           Centre: Monumental full-neck-and-shoulders cutout portrait bridging both zones
       ====================================================================== */}
       <section
-        id="about"
+        id="hero"
         aria-label="Portfolio Hero"
         className="relative w-full lg:h-screen lg:min-h-[780px] lg:max-h-[960px] rounded-none hero-studio-backdrop overflow-hidden overflow-clip flex flex-col lg:block"
       >
@@ -148,7 +105,7 @@ export default function App() {
           <div className="flex items-center justify-between gap-4 pointer-events-auto">
             {/* Top-left logo mark */}
             <a
-              href="#about"
+              href="#hero"
               aria-label="Abhinav Sai Vidadala Home"
               className="relative w-11 h-11 rounded-full bg-white text-[#942905] flex items-center justify-center transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white shrink-0"
             >
@@ -165,9 +122,9 @@ export default function App() {
               <ul className="flex items-center gap-5 sm:gap-8 lg:gap-10 text-[12.5px] sm:text-[13px] font-normal text-[#18181B]">
                 {[
                   { label: 'About', target: 'about' },
-                  { label: 'Skills', target: 'achievements' },
+                  { label: 'Skills', target: 'skills' },
                   { label: 'Achievements', target: 'achievements' },
-                  { label: 'Projects', target: 'achievements' },
+                  { label: 'Projects', target: 'projects' },
                   { label: 'Contact', target: 'contact-links' },
                 ].map((item) => {
                   const isCurrent = activeNav === item.label;
@@ -209,7 +166,7 @@ export default function App() {
               <div className="mt-8">
                 <button
                   type="button"
-                  onClick={() => scrollToSection('achievements', 'Achievements')}
+                  onClick={() => scrollToSection('projects', 'Projects')}
                   className="h-[54px] px-10 rounded-full bg-white text-[#141418] text-[13.5px] font-medium tracking-[-0.01em] shadow-[0_0_40px_rgba(255,255,255,0.62)] hover:shadow-[0_0_52px_rgba(255,255,255,0.85)] hover:scale-[1.02] active:scale-[0.99] transition-all cursor-pointer whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                 >
                   See my work
@@ -245,7 +202,7 @@ export default function App() {
             className="grid grid-cols-1 lg:grid-cols-12 items-end gap-6 pointer-events-auto"
           >
             {/* BOTTOM LEFT: Two square-ish white stat cards */}
-            <div className="lg:col-span-4 flex items-center gap-2.5">
+            <div id="achievements" className="lg:col-span-4 flex items-center gap-2.5">
               {/* Stat Card 1 */}
               <div className="w-[136px] sm:w-[142px] h-[128px] sm:h-[134px] bg-white rounded-[18px] p-3.5 sm:p-4 flex flex-col justify-between shadow-[0_10px_28px_rgba(120,45,0,0.12)]">
                 <div className="flex items-start justify-between gap-1">
@@ -286,7 +243,7 @@ export default function App() {
                 <div className="flex items-center gap-3.5">
                   <div className="w-12 h-12 rounded-[10px] overflow-hidden bg-[#B93A0B] shrink-0">
                     <img
-                      src="/me.jpg"
+                      src="me.jpg"
                       alt="Abhinav Sai Vidadala"
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover object-top"
@@ -303,7 +260,7 @@ export default function App() {
                 </div>
 
                 <blockquote className="mt-6 font-display font-normal text-[20px] sm:text-[21px] leading-[1.18] tracking-[-0.02em] text-[#141418]">
-                  &ldquo;[My motto]&rdquo;
+                  &ldquo;Curiosity starts the journey. Building turns it into impact.&rdquo;
                 </blockquote>
               </div>
             </div>
@@ -315,7 +272,7 @@ export default function App() {
           SECTION 2: ABOUT ME ("More than just code.") — REAL HTML/CSS/SVG RECREATION
       ====================================================================== */}
       <section
-        id="achievements"
+        id="about"
         aria-label="About Me"
         className="relative w-full lg:min-h-[820px] xl:min-h-[880px] about-light-studio-bg text-[#241107] overflow-hidden flex flex-col justify-between"
       >
@@ -557,8 +514,9 @@ export default function App() {
                 className="absolute bottom-[14%] left-[22%] w-[280px] sm:w-[360px] h-[280px] sm:h-[360px] rounded-full bg-[#FAA643]/40 blur-[56px] -z-10"
               />
               <img
-                src="/about-portrait-cutout.png"
+                src="about-portrait-cutout.png"
                 alt="Abhinav Sai Vidadala"
+                loading="lazy"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-contain object-bottom select-none"
               />

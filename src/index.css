@@ -1,3 +1,9 @@
+/**
+ * index.css — Global & Scoped Studio Section Stylesheet
+ * Defines typography variables, Section 1 (Hero) studio lighting, Section 2 (About Me)
+ * warm cream & orange curves, Section 3 (Skills & Tech Stack) glassmorphic tiles,
+ * Section 4 (Projects) 3D perspective showcase cards, and reduced-motion accessibility.
+ */
 @import "tailwindcss";
 
 @layer base {
@@ -57,46 +63,6 @@
     #FFFFFF 66%,
     #FFFFFF 100%
   );
-}
-
-/* Achievements dark studio section */
-.achievements-studio-bg {
-  background-color: #0B0B14;
-  background-image:
-    radial-gradient(ellipse 55% 50% at 25% 35%, rgba(109, 40, 217, 0.26) 0%, rgba(76, 29, 149, 0.08) 55%, transparent 78%),
-    radial-gradient(ellipse 52% 48% at 75% 65%, rgba(37, 99, 235, 0.22) 0%, rgba(29, 78, 216, 0.07) 55%, transparent 80%);
-}
-
-.glass-card-dark {
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.065) 0%, rgba(255, 255, 255, 0.02) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.14);
-}
-
-.glass-card-dark-active {
-  background: linear-gradient(160deg, rgba(139, 92, 246, 0.16) 0%, rgba(37, 99, 235, 0.08) 100%);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
-  border: 1px solid rgba(167, 139, 250, 0.38);
-  box-shadow: 0 20px 48px rgba(10, 8, 28, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.22);
-}
-
-@keyframes climbDotPulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 8px rgba(167, 139, 250, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(167, 139, 250, 0);
-  }
-}
-
-.climb-dot-pulse {
-  animation: climbDotPulse 2.2s infinite;
 }
 
 /* Scoped Section 2 (About Me & My Journey) Light Cream & Warm Orange Reference Styles */
@@ -256,7 +222,6 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .climb-dot-pulse,
   .skills-float-slow,
   .skills-float-medium,
   .skills-float-delayed,
